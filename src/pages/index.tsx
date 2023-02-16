@@ -2,10 +2,16 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import { useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const [nroTarjeta,setNroTarjeta] = useState("0000 0000 0000 0000");
+  const [nombre,setNombre] = useState("JANE APPLESEED");
+  const [cvc,setCvc] = useState("000");
+  const [expDate,setExpDate] = useState("00/00");
 
   const inputText = (width: string,placeholder: string,maxLength: number) => {
     const aux = 'mt-2 border rounded-md px-3 py-2 text-base font-normal text-dark-grayish-violet';
@@ -29,7 +35,7 @@ export default function Home() {
       </Head>
       <main className='w-full h-screen flex flex-col justify-between bg-white'>
         <div className='w-full h-1/3 bg-main-mobile bg-cover'></div>
-        <form className='flex flex-col gap-6 mx-7 mb-10 font-space-grotesk font-semibold text-sm' action="">
+        <form className='flex flex-col gap-14 mx-7 mb-10 font-space-grotesk font-semibold text-sm' action="">
           <label htmlFor="" className=''>
             {divTitle('CARDHOLDER NAME')}
             {inputText('w-full','e.g. Jane Appleseed',0)}
@@ -53,7 +59,15 @@ export default function Home() {
           </div>
           <button className='bg-very-dark-violet text-white w-full py-3 rounded-lg text-lg' type="submit">Confirm</button>
         </form>
-        <div className='w-4/5 h-1/5 bg-black absolute left-5 top-1/4'></div>
+        <div className='w-4/5 h-1/5 bg-card-back bg-cover absolute right-5 top-14 rounded-lg'>
+          <span className='absolute top-[4.75rem] left-64 text-white text-sm text-left'>{cvc}</span>
+        </div>
+        <div className='w-4/5 h-1/5 font-space-grotesk bg-card-front bg-cover absolute left-5 top-40 rounded-lg shadow-2xl'>
+          <Image className='w-16 h-9 relative top-5 left-5' width={0} height={0} src="/card-logo.svg" alt="" />
+          <span className='absolute bottom-12 left-5 text-2xl text-white tracking-widest'>{nroTarjeta}</span>
+          <span className='absolute text-white text-xs bottom-5 left-5 tracking-widest'>{nombre}</span>
+          <span className='absolute text-white text-xs bottom-5 right-5 tracking-widest'>{expDate}</span>
+        </div>
       </main>
     </>
   )
