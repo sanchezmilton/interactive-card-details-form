@@ -1,29 +1,31 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import { useState } from 'react'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import { useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [nroTarjeta, setNroTarjeta] = useState("0000000000000000");
+  const [nombre, setNombre] = useState("JANE APPLESEED");
+  const [cvc, setCvc] = useState("000");
+  const [month, setMonth] = useState("00");
+  const [year, setYear] = useState("00");
 
-  const [nroTarjeta,setNroTarjeta] = useState("0000 0000 0000 0000");
-  const [nombre,setNombre] = useState("JANE APPLESEED");
-  const [cvc,setCvc] = useState("000");
-  const [expDate,setExpDate] = useState("00/00");
-
-  const inputText = (width: string,placeholder: string,maxLength: number) => {
-    const aux = 'mt-2 border rounded-md px-3 py-2 text-base font-normal text-dark-grayish-violet';
-    if(maxLength)
-      return <input className={`${width} ${aux}`} maxLength={maxLength} type="text" placeholder={placeholder}/>
-    else
-      return <input className={`${width} ${aux}`} type="text" placeholder={placeholder}/>
-  }
+  const aux =
+    "mt-2 border rounded-md px-3 py-2 text-base font-normal text-dark-grayish-violet";
 
   const divTitle = (text: string) => {
-    return <div className='text-very-dark-violet'>{text}</div>
+    return <div className="text-very-dark-violet">{text}</div>;
+  };
+
+  const handleTarjeta = (tarjeta:string) => {
+    return tarjeta.match(/.{1,4}/g)!.join(' ');
   }
+
+  const handleExpDate = (mm:string,yy:string) => {
+    return mm + "/" + yy;
+  } 
 
   return (
     <>
@@ -33,42 +35,97 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='w-full h-screen flex flex-col justify-between bg-white'>
-        <div className='w-full h-1/3 bg-main-mobile bg-cover'></div>
-        <form className='flex flex-col gap-14 mx-7 mb-10 font-space-grotesk font-semibold text-sm' action="">
-          <label htmlFor="" className=''>
-            {divTitle('CARDHOLDER NAME')}
-            {inputText('w-full','e.g. Jane Appleseed',0)}
+      <main className="flex h-screen w-full flex-col xl:flex-row justify-between xl:justify-start bg-white">
+        <div className="h-1/3 w-full xl:h-full xl:w-1/3 bg-main-mobile xl:bg-main-desktop bg-cover"></div>
+        <form
+          className="mx-7 mb-10 flex flex-col gap-14 font-space-grotesk text-sm font-semibold xl:justify-center xl:flex-grow xl:mx-96"
+          action=""
+        >
+          <label htmlFor="" className="">
+            {divTitle("CARDHOLDER NAME")}
+            <input
+              className={`w-full ${aux}`}
+              onChange={(e) =>
+                e.target.value === ""
+                  ? setNombre("JANE APPLESEED")
+                  : setNombre(e.target.value)
+              }
+              type="text"
+              placeholder="e.g. Jane Appleseed"
+            />
           </label>
           <label htmlFor="">
-            {divTitle('CARD NUMBER')}
-            {inputText('w-full','e.g. 1234 5678 9123 0000',27)}
+            {divTitle("CARD NUMBER")}
+            <input
+              className={`w-full ${aux}`}
+              onChange={(e) => e.target.value === "" ? setNroTarjeta("1234 5678 9123 0000") : setNroTarjeta(e.target.value)}
+              maxLength={16}
+              type="text"
+              placeholder="e.g. 1234 5678 9123 0000"
+            />
           </label>
-          <div className='flex gap-4'>
+          <div className="flex gap-4">
             <label htmlFor="">
-              {divTitle('EXP. DATE (MM/YY)')}
-              <div className='flex gap-4'>
-                {inputText('w-16','MM',2)}
-                {inputText('w-16','YY',2)}
+              {divTitle("EXP. DATE (MM/YY)")}
+              <div className="flex gap-4">
+                <input
+                  className={`w-16 ${aux}`}
+                  onChange={(e) => e.target.value === "" ? setMonth("00") : setMonth(e.target.value)}
+                  maxLength={2}
+                  type="text"
+                  placeholder="MM"
+                />
+                <input
+                  className={`w-16 ${aux}`}
+                  onChange={(e) => e.target.value === "" ? setYear("00") : setYear(e.target.value)}
+                  maxLength={2}
+                  type="text"
+                  placeholder="YY"
+                />
               </div>
             </label>
             <label htmlFor="">
-              {divTitle('CVC')}
-              {inputText('w-full','e.g. 123',3)}
+              {divTitle("CVC")}
+              <input
+                className={`w-full ${aux}`}
+                onChange={(e) => e.target.value === "" ? setCvc("123") : setCvc(e.target.value)}
+                maxLength={3}
+                type="text"
+                placeholder="e.g. 123"
+              />
             </label>
           </div>
-          <button className='bg-very-dark-violet text-white w-full py-3 rounded-lg text-lg' type="submit">Confirm</button>
+          <button
+            className="w-full rounded-lg bg-very-dark-violet py-3 text-lg text-white"
+            type="submit"
+          >
+            Confirm
+          </button>
         </form>
-        <div className='w-4/5 h-1/5 bg-card-back bg-cover absolute right-5 top-14 rounded-lg'>
-          <span className='absolute top-[4.75rem] left-64 text-white text-sm text-left'>{cvc}</span>
+        <div className="absolute xl:fixed right-5 bottom-3/4 xl:bottom-56 h-1/5 xl:left-1/4 w-96 rounded-lg bg-card-back bg-cover">
+          <span className="absolute top-[4.75rem] left-64 text-left text-sm text-white">
+            {cvc}
+          </span>
         </div>
-        <div className='w-4/5 h-1/5 font-space-grotesk bg-card-front bg-cover absolute left-5 top-40 rounded-lg shadow-2xl'>
-          <Image className='w-16 h-9 relative top-5 left-5' width={0} height={0} src="/card-logo.svg" alt="" />
-          <span className='absolute bottom-12 left-5 text-2xl text-white tracking-widest'>{nroTarjeta}</span>
-          <span className='absolute text-white text-xs bottom-5 left-5 tracking-widest'>{nombre}</span>
-          <span className='absolute text-white text-xs bottom-5 right-5 tracking-widest'>{expDate}</span>
+        <div className="absolute left-5 top-40 xl:top-1/4 h-1/5 w-96 rounded-lg bg-card-front bg-cover font-space-grotesk shadow-2xl">
+          <Image
+            className="relative top-5 left-5 h-9 w-16"
+            width={0}
+            height={0}
+            src="/card-logo.svg"
+            alt=""
+          />
+          <span className="absolute bottom-12 left-5 text-2xl tracking-widest text-white">
+            {handleTarjeta(nroTarjeta)}
+          </span>
+          <span className="absolute bottom-5 left-5 text-xs tracking-widest text-white">
+            {nombre}
+          </span>
+          <span className="absolute bottom-5 right-5 text-xs tracking-widest text-white">
+            {handleExpDate(month,year)}
+          </span>
         </div>
       </main>
     </>
-  )
+  );
 }
