@@ -19,13 +19,13 @@ export default function Home() {
     return <div className="text-very-dark-violet">{text}</div>;
   };
 
-  const handleTarjeta = (tarjeta:string) => {
-    return tarjeta.match(/.{1,4}/g)!.join(' ');
-  }
+  const handleTarjeta = (tarjeta: string) => {
+    return tarjeta.match(/.{1,4}/g)!.join(" ");
+  };
 
-  const handleExpDate = (mm:string,yy:string) => {
+  const handleExpDate = (mm: string, yy: string) => {
     return mm + "/" + yy;
-  } 
+  };
 
   return (
     <>
@@ -35,10 +35,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex h-screen w-full flex-col xl:flex-row justify-between xl:justify-start bg-white">
-        <div className="h-1/3 w-full xl:h-full xl:w-1/3 bg-main-mobile xl:bg-main-desktop bg-cover"></div>
+      <main className="flex h-screen w-full flex-col justify-between bg-white xl:flex-row xl:justify-start">
+        <div className="h-1/3 w-full bg-main-mobile bg-cover xl:h-full xl:w-1/3 xl:bg-main-desktop"></div>
         <form
-          className="mx-7 mb-10 xl:mb-0 flex flex-col gap-14 font-space-grotesk text-sm font-semibold lg:mx-auto xl:justify-center xl:pl-24 lg:w-1/2 xl:w-auto"
+          className="mx-7 mb-10 flex flex-col gap-14 font-space-grotesk text-sm font-semibold lg:mx-auto lg:w-1/2 xl:mb-0 xl:w-auto xl:justify-center xl:pl-24"
           action=""
         >
           <label htmlFor="" className="">
@@ -59,7 +59,11 @@ export default function Home() {
             {divTitle("CARD NUMBER")}
             <input
               className={`w-full ${aux}`}
-              onChange={(e) => e.target.value === "" ? setNroTarjeta("1234 5678 9123 0000") : setNroTarjeta(e.target.value)}
+              onChange={(e) =>
+                e.target.value === ""
+                  ? setNroTarjeta("1234 5678 9123 0000")
+                  : setNroTarjeta(e.target.value)
+              }
               maxLength={16}
               type="text"
               placeholder="e.g. 1234 5678 9123 0000"
@@ -71,25 +75,35 @@ export default function Home() {
               <div className="flex gap-4">
                 <input
                   className={`w-16 ${aux}`}
-                  onChange={(e) => e.target.value === "" ? setMonth("00") : setMonth(e.target.value)}
+                  onChange={(e) =>
+                    e.target.value === ""
+                      ? setMonth("00")
+                      : setMonth(e.target.value)
+                  }
                   maxLength={2}
                   type="text"
                   placeholder="MM"
                 />
                 <input
                   className={`w-16 ${aux}`}
-                  onChange={(e) => e.target.value === "" ? setYear("00") : setYear(e.target.value)}
+                  onChange={(e) =>
+                    e.target.value === ""
+                      ? setYear("00")
+                      : setYear(e.target.value)
+                  }
                   maxLength={2}
                   type="text"
                   placeholder="YY"
                 />
               </div>
             </label>
-            <label className="flex flex-col grow" htmlFor="">
+            <label className="flex grow flex-col" htmlFor="">
               {divTitle("CVC")}
               <input
                 className={`w-full ${aux}`}
-                onChange={(e) => e.target.value === "" ? setCvc("123") : setCvc(e.target.value)}
+                onChange={(e) =>
+                  e.target.value === "" ? setCvc("123") : setCvc(e.target.value)
+                }
                 maxLength={3}
                 type="text"
                 placeholder="e.g. 123"
@@ -104,13 +118,13 @@ export default function Home() {
           </button>
         </form>
         {/* TARJETA DORSO */}
-        <div className="absolute xl:fixed right-5 lg:right-64 bottom-3/4 xl:bottom-1/3 h-1/5 xl:left-96 w-96 rounded-lg bg-card-back bg-cover">
+        <div className="absolute right-5 bottom-3/4 h-1/5 w-96 rounded-lg bg-card-back bg-cover lg:right-64 xl:fixed xl:bottom-1/3 xl:left-96">
           <span className="absolute top-[5.75rem] left-[19.5rem] text-left text-sm text-white">
             {cvc}
           </span>
         </div>
         {/* TARJETA FRENTE */}
-        <div className="absolute left-5 lg:left-64 top-40 xl:top-1/4 h-1/5 xl:left-80 w-96 rounded-lg bg-card-front bg-cover font-space-grotesk shadow-2xl">
+        <div className="absolute left-5 top-40 h-1/5 w-96 rounded-lg bg-card-front bg-cover font-space-grotesk shadow-2xl lg:left-64 xl:top-1/4 xl:left-80">
           <Image
             className="relative top-5 left-5 h-9 w-16"
             width={0}
@@ -125,7 +139,7 @@ export default function Home() {
             {nombre}
           </span>
           <span className="absolute bottom-5 right-5 text-xs tracking-widest text-white">
-            {handleExpDate(month,year)}
+            {handleExpDate(month, year)}
           </span>
         </div>
       </main>
