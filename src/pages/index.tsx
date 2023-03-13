@@ -38,7 +38,7 @@ export default function Home() {
       <main className="flex h-screen w-full flex-col xl:flex-row justify-between xl:justify-start bg-white">
         <div className="h-1/3 w-full xl:h-full xl:w-1/3 bg-main-mobile xl:bg-main-desktop bg-cover"></div>
         <form
-          className="mx-7 mb-10 flex flex-col gap-14 font-space-grotesk text-sm font-semibold xl:justify-center xl:flex-grow xl:mx-96"
+          className="mx-7 mb-10 xl:mb-0 flex flex-col gap-14 font-space-grotesk text-sm font-semibold lg:mx-auto xl:justify-center xl:pl-24 lg:w-1/2 xl:w-auto"
           action=""
         >
           <label htmlFor="" className="">
@@ -50,6 +50,7 @@ export default function Home() {
                   ? setNombre("JANE APPLESEED")
                   : setNombre(e.target.value)
               }
+              maxLength={30}
               type="text"
               placeholder="e.g. Jane Appleseed"
             />
@@ -84,7 +85,7 @@ export default function Home() {
                 />
               </div>
             </label>
-            <label htmlFor="">
+            <label className="flex flex-col grow" htmlFor="">
               {divTitle("CVC")}
               <input
                 className={`w-full ${aux}`}
@@ -102,12 +103,14 @@ export default function Home() {
             Confirm
           </button>
         </form>
-        <div className="absolute xl:fixed right-5 bottom-3/4 xl:bottom-56 h-1/5 xl:left-1/4 w-96 rounded-lg bg-card-back bg-cover">
-          <span className="absolute top-[4.75rem] left-64 text-left text-sm text-white">
+        {/* TARJETA DORSO */}
+        <div className="absolute xl:fixed right-5 lg:right-64 bottom-3/4 xl:bottom-1/3 h-1/5 xl:left-96 w-96 rounded-lg bg-card-back bg-cover">
+          <span className="absolute top-[5.75rem] left-[19.5rem] text-left text-sm text-white">
             {cvc}
           </span>
         </div>
-        <div className="absolute left-5 top-40 xl:top-1/4 h-1/5 w-96 rounded-lg bg-card-front bg-cover font-space-grotesk shadow-2xl">
+        {/* TARJETA FRENTE */}
+        <div className="absolute left-5 lg:left-64 top-40 xl:top-1/4 h-1/5 xl:left-80 w-96 rounded-lg bg-card-front bg-cover font-space-grotesk shadow-2xl">
           <Image
             className="relative top-5 left-5 h-9 w-16"
             width={0}
